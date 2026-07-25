@@ -270,12 +270,18 @@ if HAS_YOLO:
                          st.error(f"⚠️ Something went wrong while analyzing this image. Please try a different X-ray file. (Error: {e})")
                          st.stop()  # halts execution here so the rest of the code (status card, etc.) doesn't run on bad data
                         
+                   
                     # Display the big status card
                     if len(boxes) > 0:
+                        # Extract confidence scores for all detected boxes
+                        confidences = boxes.conf.tolist()
+                        avg_confidence = sum(confidences) / len(confidences)
+                        max_confidence = max(confidences)
+                        
                         st.markdown(f"""
                         <div class='status-card status-danger'>
                             <div class='status-title'>⚠️ ABNORMALITY DETECTED</div>
-                            <div class='status-sub' style='color:#fca5a5;'>Identified <b>{len(boxes)}</b> potential fracture zone(s). Requires medical review.</div>
+                            <div class='status-sub' style='color:#fca5a5;'>Identified <b>{len(boxes)}</b> potential fracture zone(s) with up to <b>{max_confidence:.0%}</b> confidence. Requires medical review.</div>
                         </div>
                         """, unsafe_allow_html=True)
                     else:
