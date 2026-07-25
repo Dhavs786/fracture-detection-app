@@ -1,0 +1,17 @@
+# Python / Environment
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+
+# System / OS
+.DS_Store
+Thumbs.db
+
+# Large weights / temporary sample outputs if needed
+# best (1).pt
+# best (1).onnx
