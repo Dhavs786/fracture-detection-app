@@ -219,7 +219,7 @@ with st.sidebar:
 model_path = "best (1).pt"
 model_files = list(Path(".").glob("best*.pt"))
 if len(model_files) > 0:
-    model_path = str(model_files[0])
+    model_path =  str(max(model_files, key=lambda p: p.stat().st_mtime))
 
 # Loading the model silently
 @st.cache_resource(show_spinner="Preparing analysis tools...")
