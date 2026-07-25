@@ -262,10 +262,14 @@ if HAS_YOLO:
                 st.markdown("---")
                 
                 with st.spinner("Analyzing radiograph..."):
-                    results = model(image)
-                    res_plotted = results[0].plot(line_width=3)
-                    boxes = results[0].boxes
-                    
+                    try:
+                        results = model(image)
+                        res_plotted = results[0].plot(line_width=3)
+                        boxes = results[0].boxes
+                    except Exception as e:
+                         st.error(f"⚠️ Something went wrong while analyzing this image. Please try a different X-ray file. (Error: {e})")
+                         st.stop()  # halts execution here so the rest of the code (status card, etc.) doesn't run on bad data
+                        
                     # Display the big status card
                     if len(boxes) > 0:
                         st.markdown(f"""
